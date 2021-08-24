@@ -71,8 +71,21 @@ const signin = async (req, res) => {
         res.status(400).json(err)
     }
 }
+
+const getuserID = (req, res) =>{
+    var userID = req.params.userID;
+    userModel.findById(userID, (err,data)=>{
+        if(!err){
+            res.send(data)
+        }else{
+            res.status(400).json(err)
+        }
+    })
+}
+
 module.exports = {
     signup,
     signin,
-    middleAuth
+    middleAuth,
+    getuserID
 }
