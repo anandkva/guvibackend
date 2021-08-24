@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors')
 const morgan = require('morgan')
 const app = express();
-const port = 3030;
+const port = process.env.PORT || 3030;
 const db = require('./database')
 const userRouter = require('./router/user.routes')
 
