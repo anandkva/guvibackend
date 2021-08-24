@@ -5,6 +5,7 @@ const app = express();
 const port = process.env.PORT || 3030;
 const db = require('./database')
 const userRouter = require('./router/user.routes')
+const WelcomeRouter = require('./router/welcome.route')
 
 
 app.use(cors());
@@ -12,6 +13,7 @@ app.use(morgan('dev'))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
 app.use('/api', userRouter)
+app.use('/', WelcomeRouter)
 
 app.listen(port, (err)=>{
     if(!err){
