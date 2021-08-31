@@ -72,6 +72,16 @@ const signin = async (req, res) => {
     }
 }
 
+const getuser = (req, res) => {
+    userModel.find((err, data) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.send(data);
+        }
+    });
+}
 const getuserID = (req, res) =>{
     var userID = req.params.userID;
     userModel.findById(userID, (err,data)=>{
@@ -83,9 +93,50 @@ const getuserID = (req, res) =>{
     })
 }
 
+
+const filteruser = (req, res) => {
+    userModel.aggregate([{ "$group": { _id: "$name" } }, { "$sort": { _id: 1 } }])
+        .exec((err, data) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.send(data);
+            }
+        })
+}
+const filtername = (req, res) => {
+    var newuser = new userModel();
+    newuser.name = req.body.name
+    userModel.aggregate([{ "$match": { name: newuser.name } }])
+        .exec((err, data) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.send(data);
+            }
+        })
+}
+const filtersum = (req, res) => {
+    userModel.aggregate([{ "$group": { _id: "$college", total: { $sum: 1 } } }])
+        .exec((err, data) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.send(data);
+            }
+        })
+}
+
 module.exports = {
     signup,
     signin,
     middleAuth,
-    getuserID
+    getuser,
+    getuserID,
+    filteruser,
+    filtername,
+    filtersum
 }
