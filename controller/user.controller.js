@@ -119,7 +119,7 @@ const filtername = (req, res) => {
         })
 }
 const filtersum = (req, res) => {
-    userModel.aggregate([{ "$group": { _id: "name", total: { $sum: 1 } } }])
+    userModel.aggregate([{ "$group": { _id: "$name", total: { $sum: 1 } } }])
         .exec((err, data) => {
             if (err) {
                 console.log(err);
